@@ -1,0 +1,66 @@
+{
+  "auth": {
+    "from_client_credentials": {
+      "method": "POST",
+      "endpoint": "/oauth/token", 
+      "body": {
+        "grant_type": "client_credentials",
+        "client_id": "config.client_id",
+        "client_secret": "config.client_secret"
+      }
+    },
+    "from_authorization_code": {
+      "method": "POST",
+      "endpoint": "/oauth/token", 
+      "body": {
+        "grant_type": "authorization_code",
+        "client_id": "config.client_id",
+        "client_secret": "config.client_secret",
+        "code": "??",
+        "redirect_uri": "??"
+      }
+    },
+    "from_refresh_token": {
+      "method": "POST",
+      "endpoint": "/oauth/token", 
+      "body": {
+        "grant_type": "refresh_token",
+        "client_id": "config.client_id",
+        "client_secret": "config.client_secret",
+        "refresh_token": "config.session.refresh_token"
+      }
+    }
+  },
+  "item": {
+    "save": {
+      "method": "POST",
+      "endpoint": "/items"
+    },
+    "view": {
+      "method": "GET",
+      "endpoint": "/items/${item_id}"
+    },
+    "update": {
+      "method": "PUT",
+      "endpoint": "/items/${item_id}"
+    },
+    "delete": {
+      "method": "DELETE",
+      "endpoint": "/items/${item_id}"
+    },
+    "description": {
+      "method": "GET",
+      "endpoint": "/items/${item_id}/description"
+    },
+    "from_authenticated_seller": {
+      "method": "GET",
+      "endpoint": "/users/${seller_id}/items/search"
+    },
+    "variacoes": {
+      "view": {
+        "method": "GET",
+        "endpoint": "/items/${item_id}/variations"
+      }
+    }
+  }
+}
