@@ -1,13 +1,14 @@
 import fetch from 'node-fetch';
 import qs from 'querystring';
 
-import sample from './sample.json'
+import demo from './demo.json'
 
-const base_url = "https://api.mercadolibre.com";
+const base_url = demo.base_url;
+delete demo["base_url"];
 
-const template_apply = (source, replaceables) => {
+const template_apply = (source, params) => {
   let _source = source;
-  for (const [target, value] of Object.entries(replaceables)) {
+  for (const [target, value] of Object.entries(params)) {
     const r = new RegExp(`\\\${${target}}`, "i");
     _source = _source.replace(r, value);
   }
@@ -21,8 +22,8 @@ const unwrap_methods = (objects, root = {}) => {
       continue;
     }
     // !! IMPORTANT HERE !!
-    root[key] = (replaceables, query, data) => {      
-      let _endpoint = template_apply(object.endpoint, replaceables);
+    root[key] = (params, query, data) => {      
+      let _endpoint = template_apply(object.endpoint, params);
       console.log(_endpoint);
       _endpoint = `${base_url}${_endpoint}`;
       if(query) _endpoint += `?${qs.stringify(query)}`;
@@ -37,7 +38,12 @@ const unwrap_methods = (objects, root = {}) => {
   return root;
 }
 
-const ret = unwrap_methods(sample);
+const ret = unwrap_methods(demo);
+
+// console.log(ret);
+/*
 ret.item.view({ item_id: "MLB999112557" })
 .then(res => res.json())
 .then(json => console.log(json));
+*/
+export default ret;
